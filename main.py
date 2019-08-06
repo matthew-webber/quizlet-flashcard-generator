@@ -1,4 +1,4 @@
-from func import create_cards, create_card_file
+from func import create_cards, list_of_cards
 import sys
 
 list_of_cards = []
@@ -17,10 +17,12 @@ while True:
 
     list_of_cards.append(card)
 
-    print("Press enter to add another card.  Type quit to quit.")
+    print("Press enter to add another card.  Q = quit, E = edit")
 
-    if input() != 'quit':
+    if input() != 'Q':
         continue
-    else:
+    elif input() == 'Q':
         create_cards(list_of_cards)
         break
+    elif input() == 'E':
+        edit_cards(list_of_cards)
