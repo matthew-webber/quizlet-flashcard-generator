@@ -7,7 +7,7 @@ def create_cards(list_of_cards, file_str=''):
     create_card_file(file_str)
 
 
-def create_card_file(file_str, file_path='/Users/webber/desktop/test123.txt'):
+def create_card_file(file_str, file_path='/Users/matt/desktop/test123.txt'):
 
     with open(file_path,'w') as f:
         f.write(file_str)
