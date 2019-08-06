@@ -1,6 +1,6 @@
 def create_cards(list_of_cards, file_str=''):
 
-    for card in list_of_cards:git
+    for card in list_of_cards:
         for front, back in card.items():
             file_str = file_str + front + '|otherside|' + back + '|newcard|'
 
