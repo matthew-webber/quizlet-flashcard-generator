@@ -1,6 +1,5 @@
 import re
 
-flag_dict = {'-e':'', 'all':''}
 
 def create_cards(list_of_cards, file_str=''):
 
@@ -16,9 +15,10 @@ def create_card_file(file_str, file_path='/Users/matt/desktop/test123.txt'):
     with open(file_path,'w') as f:
         f.write(file_str)
 
+
 def edit_cards(list_of_cards):
 
-    #  ask for user input
+    #
     #  user can enter special commands or pick card number to edit
     #
     #  EDITING
@@ -32,49 +32,92 @@ def edit_cards(list_of_cards):
     #  "show all" = show all cards, printing a 1. , 2. , etc. by each card
     #  "show [number]" = show card corresponding to [number]
 
+    print('***EDIT MODE***')
+
     while True:
 
-        print('Choose which card you want to edit.')
+        #  ask for user input
+        print('Choose which card you want to edit.  Enter Q to exit edit mode.')
         uinput = input()
 
+        #  exit edit mode
+        if uinput.strip().upper() == 'Q':
+            print('***END EDIT***')
+            return list_of_cards
+
+        #  parse input
         command = parse_user_input(uinput)
 
         try:
-            cmd = command.group(1)
+            card_num = command.group(1)
+            flag = command.group(2)
+        #  if parsing does not complete successfully (i.e. more or less than a command + flag is entered)...
         except AttributeError:
-
+            #  ...check if input is a special command, if yes, execute command, otherwise restart loop
             cmd = command.strip().lower()
-            #todo if command in list of special commands, do that
-            # otherwise, return to top, print "Error: Command not recognized."
+            if cmd == 'help':
+                #todo help display
+                pass
+            elif cmd == 'showall':
+                #todo show action
+                pass
+            # elif cmd == '':
+            #     #todo show all cards
+            #     pass
+
             continue
 
-        flag = command.group(2)
+        #  if parsing completes, check if command valid, check if flag valid, restart loop if not
+        if not card_num.strip().lower().isdigit():
+            print('Special commands do not take flags.  Enter a command or number and try again.')
+            continue
 
         if flag not in flag_dict:
             print('Error: flag not recognized.')
             continue
 
-        try:
-            list_of_cards[int(cmd)]
-        except IndexError:
-            print('Error: Card index does not exist.')
-            continue
+        list_of_cards = open_card(list_of_cards, card_num)
 
-        open_card(list_of_cards, cmd)
 
 def open_card(list_of_cards, card_num):
 
-    print(list_of_cards[int(card_num)])
+    card_num = int(card_num) - 1  # decrement index to offset 'starts at zero'
+    edited_card = list_of_cards[card_num]
+    try:
+        for front, back in edited_card.items():
+            print('Front:\t' + front)
+            print('Back:\t' + back)
 
+    except IndexError:
+        print('Error: Card index does not exist.')
+        return 0
+
+    #  ask user to reassign card
+    print('Reassign front or press Enter to skip.')
+    new_front = input()
+    print('Reassign back or press Enter to skip.')
+    new_back = input()
+
+    edited_card[new_front] = edited_card.pop(front)
+    edited_card[new_front] = new_back
+
+    return list_of_cards
+
+
+    #  shitty rework dict key from list = list[1]['AND'] = list[1].pop('and')
 
 
 def parse_user_input(uinput):
 
-    match_object = re.match(r"([\w\W\d]+?) (-?\w+)", uinput)
+    match_object = re.match(r"([\w\W\d]+?) (-?[e?])", uinput)
     if match_object is None:
         return uinput
     return match_object
 
 
-a = edit_cards([1,2,3])
+flag_dict = {'-e':'', '?': ''}
+commands_dict = {'help': '', 'quit': '', 'showall': ''}
+
+a = edit_cards([{'this':'that'},{'and':'theother'}])
 print('done!')
+print(a)
