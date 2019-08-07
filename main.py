@@ -2,48 +2,46 @@ from func import create_cards, edit_cards
 import sys
 
 list_of_cards = []
+main_menu = 'M'
 
-print('***FLASHCARD GENERATOR***')
+print('====== FLASHCARD GENERATOR ======')
 
 while True:
 
-    print(
-"""Welcome to the main menu.
+    main_menu = main_menu.strip().upper()  # clean input from a re-run of loop
+
+    if main_menu == 'M':  # root menu
+
+        print(
+            """Welcome to the main menu.
 Enter 'I' to enter card insertion mode, 'Q' to quit and save or 'X' to quit w/o saving."""
-    )
+        )
+        main_menu = input()
+        main_menu = main_menu.strip().upper()  # clean input
 
-    main_menu = input()
-    main_menu = main_menu.strip().upper()  # clean input
-
-    # if asked to quit and cards >= 1
-
-    if main_menu == 'Q' and list_of_cards:
+    if main_menu == 'Q' and list_of_cards:  # quit, cards >= 1
         print('Creating cards...')
-        #create_cards(list_of_cards)
+        create_cards(list_of_cards)
         print(f'Created {len(list_of_cards)} cards!')
         print('Exiting...')
         break
 
-    elif main_menu == 'Q':  # if asked to quit and cards = 0
+    elif main_menu == 'Q':  # quit, no cards
         print('No cards to create.')
         print('Exiting...')
         break
 
-    # quit without saving
-
-    elif main_menu == 'X':
+    elif main_menu == 'X':  # quit without saving
         print('Exiting...')
         break
 
-    # enter insertion mode
-
-    elif main_menu == 'I':
+    elif main_menu == 'I':  # enter insertion mode
         print('***INSERTION MODE***')
 
-    # unrecognized command
-
-    else:
+    else:  # return to main menu
         print('Command not recognized.')
+        main_menu = 'M'
+        continue
 
     card = {}
 
@@ -59,7 +57,18 @@ Enter 'I' to enter card insertion mode, 'Q' to quit and save or 'X' to quit w/o 
 
     print("Press Enter to add another card.  'E' to edit cards, 'Q' to quit and save, or 'X' to quit w/o saving.")
 
-    if main_menu == 'E':
-        edit_cards(list_of_cards)
+    while True:
 
+        insertion_menu = input()
 
+        if insertion_menu == 'E':
+            print('***END INSERTION MODE***')
+            list_of_cards = edit_cards(list_of_cards)
+            print('Returning to main menu...')
+            main_menu = 'M'
+
+        elif insertion_menu == '':
+            insertion_menu = 'I'
+
+        main_menu = insertion_menu
+        break

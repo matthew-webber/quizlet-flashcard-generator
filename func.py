@@ -5,12 +5,12 @@ def create_cards(list_of_cards, file_str=''):
 
     for card in list_of_cards:
         for front, back in card.items():
-            file_str = file_str + front + '|otherside|' + back + '|newcard|'
+            file_str = file_str + front + '||||' + back + '\\\\\\\\'
 
     create_card_file(file_str)
 
 
-def create_card_file(file_str, file_path='/Users/webber/desktop/test123.txt'):
+def create_card_file(file_str, file_path='/Users/matt/desktop/test123.txt'):
 
     with open(file_path,'w') as f:
         f.write(file_str)
@@ -42,7 +42,7 @@ def edit_cards(list_of_cards):
 
         #  exit edit mode
         if uinput.strip().upper() == 'Q':
-            print('***END EDIT***')
+            print('***END EDIT MODE***')
             return list_of_cards
 
         #  parse input
