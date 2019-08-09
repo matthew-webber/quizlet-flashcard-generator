@@ -2,11 +2,12 @@ import re
 import help
 
 
-def create_cards(list_of_cards, file_path, file_str=''):
+def create_cards(list_of_cards, file_path, file_str=r'\\\\'):
 
     for card in list_of_cards:
         for front, back in card.items():
             file_str = file_str + front + help.side_separator + back + help.card_separator
+            print(file_str)
 
     create_card_file(file_str, file_path)
 
