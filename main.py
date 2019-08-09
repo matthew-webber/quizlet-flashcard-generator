@@ -2,6 +2,8 @@ from func import create_cards, edit_cards
 import sys
 import help
 
+#todo add a feature to 'open' an existing flashcard to add to it
+
 list_of_cards = []
 main_menu = 'M'
 
@@ -71,10 +73,9 @@ Enter 'help' for more."""
         # todo using return to 'skip' the card side editing causes it to go blank
         # todo indexerror in edit mode when choosing '2' when list of cards only '1'
 
-
         if insertion_menu == 'E':
             print('***END INSERTION MODE***')
-            list_of_cards = edit_cards(list_of_cards)
+            list_of_cards = edit_cards(list_of_cards, help.file_path)
             print('Returning to main menu...')
             main_menu = 'M'
             break

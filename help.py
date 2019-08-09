@@ -1,6 +1,6 @@
 side_separator = '||||'
 card_separator = '\\\\\\\\'
-file_path = '/Users/matt/desktop/test123.txt'
+file_path = '/Users/matt/desktop/flashcards/test123.txt'
 flag_dict = {'-e': '', 'showall': 'In edit mode, shows all available cards front + back and corresponding card number'}
 
 help_text = f"""

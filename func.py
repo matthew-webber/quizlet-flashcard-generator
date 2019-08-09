@@ -1,13 +1,14 @@
 import re
 import help
 
-def create_cards(list_of_cards, file_str=''):
+
+def create_cards(list_of_cards, file_path, file_str=''):
 
     for card in list_of_cards:
         for front, back in card.items():
             file_str = file_str + front + help.side_separator + back + help.card_separator
 
-    create_card_file(file_str)
+    create_card_file(file_str, file_path)
 
 
 def create_card_file(file_str, file_path='/Users/matt/desktop/test123.txt'):
@@ -96,9 +97,6 @@ def open_card(list_of_cards, card_num):
     edited_card[new_front] = new_back
 
     return list_of_cards
-
-
-    #  shitty rework dict key from list = list[1]['AND'] = list[1].pop('and')
 
 
 def parse_user_input(uinput):
