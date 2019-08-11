@@ -15,6 +15,15 @@ def parse_user_input(uinput):
     return match_object
 
 
+def show_all(thing):
+    if isinstance(thing, Deck):
+        for card in deck.stack:
+            i = deck.stack.index(card) + 1
+            print(f"""Card #{i} {card.front}/{card.back}""")
+
+def show_help(*args):
+    print(help.help_text)
+
 # def create_back():
 #     print("Enter back of card -- enter ^D to continue.")
 #     return input()
@@ -60,10 +69,26 @@ Commands: 'i' (make cards), 'e' (edit cards), 'q' (save + quit), 'x' (quit w/o s
     commands = \
         dict(
             #todo parse out showall to be show + all
-            quit={'name': 'quit', 'command': 'Q', 'action': 'Exit current mode'},
-            save={'name': 'save', 'command': 'S', 'action': 'Save the current file/deck'},
-            showall={'name': 'showall', 'command': 'showall', 'action': 'Show all files/cards/decks/etc.'},
-            help={'name': 'help', 'command': 'help', 'action': 'Show help file text'},
+            quit={
+                'name': 'quit',
+                'command': 'Q',
+                'action': 'Exit current mode',
+                'function': ''},
+            save={
+                'name': 'save',
+                'command': 'S',
+                'action': 'Save the current file/deck',
+                'function': ''},
+            showall={
+                'name': 'showall',
+                'command': 'showall',
+                'action': 'Show all files/cards/decks/etc.',
+                'function': show_all},
+            help={
+                'name': 'help',
+                'command': 'help',
+                'action': 'Show help file text',
+                'function': show_help},
             # insertion={'name': 'insertion', 'command': 'I', 'action': 'Show help file text'},
         )
 
@@ -150,6 +175,7 @@ class Deck:
         # todo add more properties of the deck to this dict
         return {'length': len(self.stack)}
 
+
     # def update_stack(self, stack):
     #     for card in stack:
     #         self.stack.append(card)
@@ -191,6 +217,7 @@ mode_selection = x.input_to_name(lower_and_strip(input()))
 x.set_mode(mode_selection)
 
 # todo add text about typing quit to insertion greeting
+# todo prevent blank cards from being made during insertion and edit
 if x.mode['name'] == 'insertion':
     while True:
         deck.add_card()
@@ -218,10 +245,13 @@ if x.mode['name'] == 'edit':
             show_card(card_to_edit)
             card_to_edit.edit_card(input('\nFront:\n'), input('Back:\n'))
 
-        # if parsed input is a command, do command action
+        # if parsed input is a command, do associated action from dict
         elif isinstance(parsed_input, str) and parsed_input in x.commands:
-            print('ok')
-            continue
+            x.commands[parsed_input]['function'](deck)
+            # for card in deck.stack:
+            #     i = deck.stack.index(card) + 1
+            #     print(f"""Card #{i} {card.front}/{card.back}""")
+            # continue
 
         else:
             print('Command not recognized.')
