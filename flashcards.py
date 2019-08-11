@@ -11,6 +11,10 @@ def create_front():
     print("Enter front of card -- enter ^D to continue.")
     return input()
 
+def show_card(picked_card):
+    if picked_card:
+        print(f"Front:\t{picked_card['front']}")
+        print(f"Back:\t{picked_card['back']}")
 
 class ModeBuilder:
 
@@ -75,9 +79,8 @@ class Card:
         self.index = self.update_index()
 
     def update_index(self):
-        return len(self.deck.stack)  # index = length of parent deck's stack
+        return len(self.deck.stack)  # card not yet added so index = length of parent deck's stack
 
-    # def open_card(self):
     #
     #     card_num = int(self.index) - 1  # decrement index to offset 'starts at zero'
     #     edited_card = list_of_cards[card_num]
@@ -95,11 +98,19 @@ class Card:
 
 class Deck:
 
-    def __init__(self, stack=[]):
-        assert isinstance(stack, list)
-        self.stack = stack
+    def __init__(self):
+        self.stack = []
+
+    def get_card(self, index):
+        try:
+            card = self.stack[index - 1]
+        except IndexError:
+            return None
+
+        return {'front': card.front, 'back': card.back}
 
     def get_deck(self):
+        # todo add more properties of the deck to this dict
         return {'length': len(self.stack)}
 
     # def update_stack(self, stack):
@@ -111,7 +122,6 @@ class Deck:
         return
 
     def create_deck_string(self):
-
         deck_str = help.card_separator
 
         for card in self.stack:
@@ -125,7 +135,6 @@ class Deck:
         self.stack.append(new_card)
 
     def save_deck(self, deck_str):
-
         with open(help.file_path, 'w') as f:
             f.write(deck_str)
 
@@ -134,5 +143,9 @@ class Deck:
 # a = []
 
 # thisthat = Card('front', 'back', 1, yyz)
-xya = Deck()
 
+xya = Deck()
+xya.add_card()
+xya.add_card()
+picked_card = xya.get_card(1)
+show_card(picked_card)
