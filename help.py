@@ -3,6 +3,11 @@ card_separator = '\\\\\\\\'
 file_path = '/Users/matt/desktop/flashcards/test123.txt'
 flag_dict = {'-e': '', 'showall': 'In edit mode, shows all available cards front + back and corresponding card number'}
 
+# todo using return to 'skip' the card side editing causes it to go blank
+# todo Q at end of insertion mode doesn't work
+# todo indexerror in edit mode when choosing '2' when list of cards only '1'
+
+
 help_text = f"""
 === HELP ===
 

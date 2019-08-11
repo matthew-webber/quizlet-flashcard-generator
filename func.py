@@ -1,22 +1,25 @@
 import re
 import help
 
+#
+# def create_cards(list_of_cards, file_path, file_str=r'\\\\'):
+#
+#     for card in list_of_cards:
+#         for front, back in card.items():
+#             file_str = file_str + front + help.side_separator + back + help.card_separator
+#             print(file_str)
+#
+#     create_card_file(file_str, file_path)
 
-def create_cards(list_of_cards, file_path, file_str=r'\\\\'):
+#
+# def create_card_file(file_str, file_path='/Users/matt/desktop/test123.txt'):
+#
+#     with open(file_path,'w') as f:
+#         f.write(file_str)
 
-    for card in list_of_cards:
-        for front, back in card.items():
-            file_str = file_str + front + help.side_separator + back + help.card_separator
-            print(file_str)
+def upper_and_strip(input):
 
-    create_card_file(file_str, file_path)
-
-
-def create_card_file(file_str, file_path='/Users/matt/desktop/test123.txt'):
-
-    with open(file_path,'w') as f:
-        f.write(file_str)
-
+    return input.strip().upper()
 
 def edit_cards(list_of_cards):
 
@@ -26,7 +29,7 @@ def edit_cards(list_of_cards):
 
         #  ask for user input
         print('Choose which card you want to edit.  Enter Q to exit edit mode.')
-        uinput = input()
+        uinput = input().strip().upper()
 
         #  exit edit mode
         if uinput.strip().upper() == 'Q':
@@ -79,9 +82,7 @@ def open_card(list_of_cards, card_num):
             new_front = front
             new_back = back
 
-    except IndexError:
-        print('Error: Card index does not exist.')
-        return 0
+
 
     #  ask user to reassign card
     print('Reassign front or press Enter to skip.')

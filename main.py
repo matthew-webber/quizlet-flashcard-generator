@@ -1,10 +1,11 @@
 from func import create_cards, edit_cards
+from flashcards import Deck, Card
 import sys
 import help
 
 #todo add a feature to 'open' an existing flashcard to add to it
 
-list_of_cards = []
+deck = Deck()
 main_menu = 'M'
 
 print('====== FLASHCARD GENERATOR ======')
@@ -23,10 +24,10 @@ Enter 'help' for more."""
         main_menu = input()
         main_menu = main_menu.strip().upper()  # clean input
 
-    if main_menu == 'Q' and list_of_cards:  # quit, cards >= 1
+    if main_menu == 'Q' and deck.stack:  # quit, cards >= 1
         print('Creating cards...')
-        create_cards(list_of_cards, help.file_path)
-        print(f'Created {len(list_of_cards)} cards!')
+        create_cards(deck, help.file_path)
+        print(f'Created {len(deck.stack)} cards!')
         print('Exiting...')
         break
 
@@ -62,7 +63,7 @@ Enter 'help' for more."""
 
     card[card_front] = card_back
 
-    list_of_cards.append(card)
+    deck.append(card)
 
     print("Press Enter to add another card.  'E' to edit cards, 'Q' to quit and save, or 'X' to quit w/o saving.")
 
@@ -70,13 +71,11 @@ Enter 'help' for more."""
 
         insertion_menu = input()
         insertion_menu = insertion_menu.strip().upper()
-        # todo using return to 'skip' the card side editing causes it to go blank
-        # todo Q at end of insertion mode doesn't work
-        # todo indexerror in edit mode when choosing '2' when list of cards only '1'
 
         if insertion_menu == 'E':
             print('***END INSERTION MODE***')
-            list_of_cards = edit_cards(list_of_cards)
+            #todo the below doesn't work
+            deck.update_stack() = edit_cards(deck)
             print('Returning to main menu...')
             main_menu = 'M'
             break
