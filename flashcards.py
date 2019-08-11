@@ -68,14 +68,14 @@ Commands: 'I' (make cards), 'Q' (save + quit), 'X' (quit w/o saving), 'help'""",
 
 class Card:
 
-    def __init__(self, index=0, deck=''):
+    def __init__(self, deck, index=0):
         self.front = create_front()
         self.back = create_back()
-        self.index = index
         self.deck = deck
+        self.index = self.update_index()
 
     def update_index(self):
-        self.index = self.deck
+        return len(self.deck.stack)  # index = length of parent deck's stack
 
     # def open_card(self):
     #
@@ -130,9 +130,9 @@ class Deck:
             f.write(deck_str)
 
 
-yyz = ModeBuilder()
-a = []
+# yyz = ModeBuilder()
+# a = []
 
 # thisthat = Card('front', 'back', 1, yyz)
 xya = Deck()
-xya.add_card()
+
